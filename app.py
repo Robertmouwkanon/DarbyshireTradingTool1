@@ -3,7 +3,13 @@ import time
 import requests
 import pandas as pd
 import streamlit as st
-from dotenv import load_dotenv
+
+# dotenv is handig lokaal, maar mag geen fout geven als het niet geïnstalleerd is (zoals op Streamlit Cloud)
+try:
+    from dotenv import load_dotenv
+except ImportError:  # pragma: no cover - fallback voor omgevingen zonder python-dotenv
+    def load_dotenv(*args, **kwargs):
+        return None
 
 # =========================
 # Translations (nl / en)
@@ -219,7 +225,9 @@ st.caption(APP_VERSION)
 st.caption(t("disclaimer"))
 
 load_dotenv()
-API_KEY = os.environ.get("TWELVE_DATA_API_KEY")
+# Lokaal lezen we TWELVE_DATA_API_KEY uit .env (os.environ),
+# op Streamlit Cloud kan dezelfde key in st.secrets staan.
+API_KEY = os.environ.get("TWELVE_DATA_API_KEY") or st.secrets.get("TWELVE_DATA_API_KEY", None)
 BASE_URL = "https://api.twelvedata.com/time_series"
 
 # =========================
