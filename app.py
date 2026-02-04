@@ -396,14 +396,16 @@ if market_filter_enabled:
 # =========================
 @st.cache_data(show_spinner=False)
 def fetch_data(symbol: str, outputsize: int = 4000) -> pd.DataFrame:
-    if not API_KEY:
-        raise RuntimeError("Geen TWELVE_DATA_API_KEY gevonden in .env")
+    # Probeer API-key uit globale variabele, environment of Streamlit secrets
+    api_key = API_KEY or os.environ.get("TWELVE_DATA_API_KEY") or getattr(st.secrets, "get", lambda *a, **k: None)("TWELVE_DATA_API_KEY", None)
+    if not api_key:
+        raise RuntimeError("Geen TWELVE_DATA_API_KEY gevonden (controleer .env of Streamlit secrets).")
 
     params = {
         "symbol": symbol,
         "interval": "1day",
         "outputsize": outputsize,
-        "apikey": API_KEY,
+        "apikey": api_key,
         "format": "JSON",
     }
     r = requests.get(BASE_URL, params=params, timeout=30)
