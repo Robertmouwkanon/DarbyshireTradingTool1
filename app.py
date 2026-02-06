@@ -34,6 +34,8 @@ def _tr() -> dict:
         "signal_settings": {"nl": "Signal instellingen", "en": "Signal settings"},
         "rsi_period": {"nl": "RSI periode", "en": "RSI period"},
         "rsi_period_help": {"nl": "RSI meet of iets 'oververhit' of 'oversold' is. Hogere periode = rustiger signaal, lagere = gevoeliger.", "en": "RSI measures overbought/oversold. Higher period = smoother signal, lower = more sensitive."},
+        "fib_lookback": {"nl": "Fibonacci lookback (dagen)", "en": "Fibonacci lookback (days)"},
+        "fib_lookback_help": {"nl": "Aantal dagen voor swing high/low. Langer = grotere range, andere Fib-niveaus (bv. 105 zoals Beyond Charts).", "en": "Days for swing high/low. Longer = larger range, different Fib levels (e.g. 105 like Beyond Charts)."},
         "buy_threshold_help": {"nl": "Vanaf welke confidence (0–1) het model BUY geeft. Hoger = strenger (minder vaak koop), lager = vaker koop.", "en": "Above this confidence (0–1) the model gives BUY. Higher = stricter, lower = more buy signals."},
         "backtest_settings": {"nl": "Backtest instellingen", "en": "Backtest settings"},
         "exit_threshold_help": {"nl": "Onder welke confidence we uit een positie stappen. Lager = langer vasthouden, hoger = sneller verkopen.", "en": "Below this confidence we exit. Lower = hold longer, higher = exit sooner."},
@@ -121,18 +123,18 @@ def _tr() -> dict:
         "home_expander_text": {"nl": "**Darbyshire Trading Tool** gebruikt koersdata en technische indicatoren om een **koopsignaal** (BUY of HOLD) te geven. Dat is geen garantie: het is een hulpmiddel voor onderzoek. **Confidence** (0–1) is een score die RSI, trend en momentum combineert; boven de drempel krijg je BUY. **Backtest** laat zien hoe het signaal in het verleden had uitgepakt.", "en": "**Darbyshire Trading Tool** uses price data and technical indicators to give a **buy signal** (BUY or HOLD). Not a guarantee—for research only. **Confidence** (0–1) combines RSI, trend and momentum; above the threshold you get BUY. **Backtest** shows how the signal would have performed in the past."},
         # Koersdata
         "koersdata_cols_title": {"nl": "ℹ️ Wat betekenen de kolommen?", "en": "ℹ️ What do the columns mean?"},
-        "koersdata_cols_text": {"nl": "- **open/high/low/close**: koers op de dag (open = start, close = slot).\n- **volume**: aantal verhandelde stuks.\n- **rsi**: Relative Strength Index (0–100); onder 30 vaak 'oversold', boven 70 'overbought'.\n- **ema20/50/200**: gemiddelde koers over 20, 50 of 200 dagen (trend).\n- **roc10**: procentuele verandering over 10 dagen (momentum).\n- **range_pct**: spreiding hoog–laag (volatiliteit).\n- **macd_line / macd_signal / macd_hist**: MACD (12,26,9); lijn, signaallijn en histogram; kruisingen kunnen momentum aangeven.\n- **fib_236 t/m fib_786**: Fibonacci-retracementniveaus (23,6%–78,6%) t.o.v. de swing van de laatste 55 dagen; vaak gebruikt als steun/weerstand.\n- **confidence**: model-score 0–1; hoger = sterker signaal.\n- **conf_bucket**: confidence in een groep (voor statistiek).\n- **setup**: type marktsituatie (Bird = dip, Green = trend, Grey = onduidelijk, None).\n- **signal**: BUY of HOLD op basis van de drempel.", "en": "- **open/high/low/close**: daily price (open = start, close = end).\n- **volume**: number of shares/funds traded.\n- **rsi**: Relative Strength Index (0–100); below 30 often oversold, above 70 overbought.\n- **ema20/50/200**: average price over 20, 50 or 200 days (trend).\n- **roc10**: % change over 10 days (momentum).\n- **range_pct**: high–low spread (volatility).\n- **macd_line / macd_signal / macd_hist**: MACD (12,26,9); line, signal line and histogram; crossovers can indicate momentum.\n- **fib_236 to fib_786**: Fibonacci retracement levels (23.6%–78.6%) vs the last 55-day swing; often used as support/resistance.\n- **confidence**: model score 0–1; higher = stronger signal.\n- **conf_bucket**: confidence group (for stats).\n- **setup**: market type (Bird = dip, Green = trend, Grey = unclear, None).\n- **signal**: BUY or HOLD based on threshold."},
+        "koersdata_cols_text": {"nl": "- **open/high/low/close**: koers op de dag (open = start, close = slot).\n- **volume**: aantal verhandelde stuks.\n- **rsi**: Relative Strength Index (0–100); onder 30 vaak 'oversold', boven 70 'overbought'.\n- **ema20/50/200**: gemiddelde koers over 20, 50 of 200 dagen (trend).\n- **roc10**: procentuele verandering over 10 dagen (momentum).\n- **range_pct**: spreiding hoog–laag (volatiliteit).\n- **macd_line / macd_signal / macd_hist**: MACD (12,26,9); lijn, signaallijn en histogram; kruisingen kunnen momentum aangeven.\n- **fib_236 t/m fib_786**: Fibonacci-retracementniveaus (23,6%–78,6%) t.o.v. de swing van de laatste 105 dagen; vaak gebruikt als steun/weerstand.\n- **confidence**: model-score 0–1; hoger = sterker signaal.\n- **conf_bucket**: confidence in een groep (voor statistiek).\n- **setup**: type marktsituatie (Bird = dip, Green = trend, Grey = onduidelijk, None).\n- **signal**: BUY of HOLD op basis van de drempel.", "en": "- **open/high/low/close**: daily price (open = start, close = end).\n- **volume**: number of shares/funds traded.\n- **rsi**: Relative Strength Index (0–100); below 30 often oversold, above 70 overbought.\n- **ema20/50/200**: average price over 20, 50 or 200 days (trend).\n- **roc10**: % change over 10 days (momentum).\n- **range_pct**: high–low spread (volatility).\n- **macd_line / macd_signal / macd_hist**: MACD (12,26,9); line, signal line and histogram; crossovers can indicate momentum.\n- **fib_236 to fib_786**: Fibonacci retracement levels (23.6%–78.6%) vs the last 105-day swing; often used as support/resistance.\n- **confidence**: model score 0–1; higher = stronger signal.\n- **conf_bucket**: confidence group (for stats).\n- **setup**: market type (Bird = dip, Green = trend, Grey = unclear, None).\n- **signal**: BUY or HOLD based on threshold."},
         "chart_close": {"nl": "Koersgrafiek (Close)", "en": "Price chart (Close)"},
         "macd_fib_title": {"nl": "MACD & Fibonacci (laatste slot)", "en": "MACD & Fibonacci (last close)"},
-        "macd_fib_caption": {"nl": "MACD (12,26,9). Fibonacci op basis van swing laatste 55 dagen.", "en": "MACD (12,26,9). Fibonacci based on 55-day swing."},
+        "macd_fib_caption": {"nl": "MACD (12,26,9). Fibonacci op basis van swing laatste 105 dagen.", "en": "MACD (12,26,9). Fibonacci based on 105-day swing."},
         "macd_line_help": {"nl": "MACD-lijn = EMA(12) − EMA(26). Geeft het verschil tussen korte en langere trend; positief = korte termijn sterker.", "en": "MACD line = EMA(12) − EMA(26). Shows the difference between short and longer trend; positive = short term stronger."},
         "macd_signal_help": {"nl": "Signaallijn = 9-daagse gemiddelde van de MACD-lijn. Kruising van MACD door de signaallijn wordt vaak als koop/verkoopmoment gezien.", "en": "Signal line = 9-day average of the MACD line. MACD crossing the signal line is often seen as a buy/sell moment."},
         "macd_hist_help": {"nl": "Histogram = MACD-lijn minus signaallijn. Positief = opwaarts momentum, negatief = neerwaarts. Groeiend histogram = sterkere beweging.", "en": "Histogram = MACD line minus signal line. Positive = upward momentum, negative = downward. Growing histogram = stronger move."},
-        "fib_382_help": {"nl": "Fibonacci 38,2%: retracementniveau t.o.v. de swing (hoog–laag) van de laatste 55 dagen. Vaak gebruikt als steun of weerstand.", "en": "Fibonacci 38.2%: retracement level vs the last 55-day swing (high–low). Often used as support or resistance."},
+        "fib_382_help": {"nl": "Fibonacci 38,2%: retracementniveau t.o.v. de swing (hoog–laag) van de laatste 105 dagen. Vaak gebruikt als steun of weerstand.", "en": "Fibonacci 38.2%: retracement level vs the last 105-day swing (high–low). Often used as support or resistance."},
         "fib_50_help": {"nl": "Fibonacci 50%: halverwege de swing. Klassiek retracementniveau; prijs kan hier reageren.", "en": "Fibonacci 50%: halfway the swing. Classic retracement level; price may react here."},
         "fib_618_help": {"nl": "Fibonacci 61,8%: 'gulden snede'-niveau; veel gebruikt als steun bij pullbacks of doel bij uitbreken.", "en": "Fibonacci 61.8%: 'golden ratio' level; often used as support on pullbacks or target on breakouts."},
         "macd_fib_expander": {"nl": "ℹ️ Uitleg MACD & Fibonacci", "en": "ℹ️ MACD & Fibonacci explained"},
-        "macd_fib_expander_text": {"nl": "**MACD** (Moving Average Convergence Divergence) vergelijkt een korte en een langere trendlijn (EMA 12 en 26). De lijn, signaallijn en histogram helpen momentum en mogelijke draaipunten te zien; een kruising van MACD door de signaallijn wordt door veel traders gebruikt.\n\n**Fibonacci-retracement** gebruikt verhoudingen (23,6%, 38,2%, 50%, 61,8%, 78,6%) van een recente prijsswing (hier: hoog en laag over de laatste 55 dagen). Die niveaus werken vaak als steun of weerstand. Geen garantie — puur als hulpmiddel.", "en": "**MACD** (Moving Average Convergence Divergence) compares a short and a longer trend line (EMA 12 and 26). The line, signal line and histogram help see momentum and possible turning points; MACD crossing the signal line is used by many traders.\n\n**Fibonacci retracement** uses ratios (23.6%, 38.2%, 50%, 61.8%, 78.6%) of a recent price swing (here: high and low over the last 55 days). Those levels often act as support or resistance. No guarantee — for guidance only."},
+        "macd_fib_expander_text": {"nl": "**MACD** (Moving Average Convergence Divergence) vergelijkt een korte en een langere trendlijn (EMA 12 en 26). De lijn, signaallijn en histogram helpen momentum en mogelijke draaipunten te zien; een kruising van MACD door de signaallijn wordt door veel traders gebruikt.\n\n**Fibonacci-retracement** gebruikt verhoudingen (23,6%, 38,2%, 50%, 61,8%, 78,6%) van een recente prijsswing (hier: hoog en laag over de laatste 105 dagen). Die niveaus werken vaak als steun of weerstand. Geen garantie — puur als hulpmiddel.", "en": "**MACD** (Moving Average Convergence Divergence) compares a short and a longer trend line (EMA 12 and 26). The line, signal line and histogram help see momentum and possible turning points; MACD crossing the signal line is used by many traders.\n\n**Fibonacci retracement** uses ratios (23.6%, 38.2%, 50%, 61.8%, 78.6%) of a recent price swing (here: high and low over the last 105 days). Those levels often act as support or resistance. No guarantee — for guidance only."},
         "macd_fib_advies_title": {"nl": "Advies: instap, uitstap en kans (MACD & Fib)", "en": "Advice: entry, exit and probability (MACD & Fib)"},
         "macd_fib_instap_near": {"nl": "**Instap:** De prijs zit nu vlak bij het Fib **{level}**-niveau (ca. ${price:.2f}). Veel traders zien zo'n niveau als logische instap of toevoeging. Combineer met het BUY/HOLD-signaal hierboven.", "en": "**Entry:** Price is currently near the Fib **{level}** level (approx. ${price:.2f}). Many traders use such levels for entry or adding. Combine with the BUY/HOLD signal above."},
         "macd_fib_instap_above": {"nl": "**Instap:** Prijs zit boven de Fib-niveaus (sterke beweging). Wachten op een pullback naar bv. Fib 50% of 61,8% kan een betere risico/opbrengst geven, of meegaan als het signaal BUY is.", "en": "**Entry:** Price is above the Fib levels (strong move). Waiting for a pullback to e.g. Fib 50% or 61.8% may improve risk/reward, or follow if the signal is BUY."},
@@ -270,31 +272,6 @@ def _tr() -> dict:
         "export_error": {"nl": "Fout bij export:", "en": "Export error:"},
         "export_no_data": {"nl": "Geen data beschikbaar voor deze ticker.", "en": "No data available for this ticker."},
         "export_macd_fib_note": {"nl": "De koersdata-export bevat de kolommen **MACD** (macd_line, macd_signal, macd_hist) en **Fibonacci** (fib_236, fib_382, fib_50, fib_618, fib_786, swing_high, swing_low), zodat je ze in Excel kunt gebruiken.", "en": "The price data export includes **MACD** columns (macd_line, macd_signal, macd_hist) and **Fibonacci** (fib_236, fib_382, fib_50, fib_618, fib_786, swing_high, swing_low) so you can use them in Excel."},
-        # Offerte generator
-        "page_offerte": {"nl": "Offerte generator", "en": "Quote generator"},
-        "offerte_title": {"nl": "Offerte generator", "en": "Quote generator"},
-        "offerte_intro": {"nl": "Vul het menu in en genereer je offerte. Je kunt de offerte direct bekijken en als PDF downloaden.", "en": "Fill in the menu and generate your quote. You can preview it and download as PDF."},
-        "offerte_klant": {"nl": "Klantgegevens", "en": "Client details"},
-        "offerte_klant_naam": {"nl": "Naam / bedrijf", "en": "Name / company"},
-        "offerte_klant_adres": {"nl": "Adres", "en": "Address"},
-        "offerte_klant_plaats": {"nl": "Plaats", "en": "City"},
-        "offerte_klant_ref": {"nl": "Referentie (bijv. projectnaam)", "en": "Reference (e.g. project name)"},
-        "offerte_regels": {"nl": "Offertelijnen", "en": "Quote lines"},
-        "offerte_regel_omschrijving": {"nl": "Omschrijving", "en": "Description"},
-        "offerte_regel_aantal": {"nl": "Aantal", "en": "Quantity"},
-        "offerte_regel_prijs": {"nl": "Eenheidsprijs (€)", "en": "Unit price (€)"},
-        "offerte_regel_toevoegen": {"nl": "Regel toevoegen", "en": "Add line"},
-        "offerte_regel_verwijderen": {"nl": "Verwijderen", "en": "Remove"},
-        "offerte_opties": {"nl": "Opties", "en": "Options"},
-        "offerte_btw": {"nl": "BTW %", "en": "VAT %"},
-        "offerte_geldig": {"nl": "Geldig tot (datum)", "en": "Valid until (date)"},
-        "offerte_ondertitel": {"nl": "Ondertitel offerte (optioneel)", "en": "Quote subtitle (optional)"},
-        "offerte_preview": {"nl": "Preview offerte", "en": "Quote preview"},
-        "offerte_download_pdf": {"nl": "Download als PDF", "en": "Download as PDF"},
-        "offerte_subtotaal": {"nl": "Subtotaal", "en": "Subtotal"},
-        "offerte_btw_bedrag": {"nl": "BTW", "en": "VAT"},
-        "offerte_totaal": {"nl": "Totaal", "en": "Total"},
-        "offerte_geen_regels": {"nl": "Voeg minstens één regel toe om de offerte te genereren.", "en": "Add at least one line to generate the quote."},
     }
 
 T = _tr()
@@ -337,7 +314,7 @@ SCANNER_UNIVERSES = {
     "Crypto (BTC + ETF's)": ["BTC/USD", "BITO", "IBIT", "FBTC"],
 }
 
-PAGE_KEYS = ["Home", "Koersdata", "Signals", "Scanner", "Watchlist", "Optimizer", "Koopsignalen Gold", "Bitcoin", "S&P 500", "Backtest", "Offerte generator", "Export (later)"]
+PAGE_KEYS = ["Home", "Koersdata", "Signals", "Scanner", "Watchlist", "Optimizer", "Koopsignalen Gold", "Bitcoin", "S&P 500", "Backtest", "Export (later)"]
 with st.sidebar:
     lang_choice = st.radio("Language / Taal", ["🇳🇱 Nederlands", "🇬🇧 English"], horizontal=True)
     st.session_state.lang = "nl" if "Nederlands" in lang_choice else "en"
@@ -353,7 +330,6 @@ with st.sidebar:
         "page_bitcoin",
         "page_sp500",
         "page_backtest",
-        "page_offerte",
         "page_export",
     ]
     page_index = st.radio(t("choose"), range(len(PAGE_KEYS)), format_func=lambda i: t(_page_labels[i]))
@@ -436,6 +412,13 @@ with st.sidebar:
     st.subheader(t("signal_settings"))
     rsi_period = st.slider(t("rsi_period"), 5, 30, 14, help=t("rsi_period_help"))
     buy_threshold = st.slider("BUY threshold", 0.50, 0.95, 0.65, 0.01, key="buy_threshold_slider", help=t("buy_threshold_help"))
+    fib_lookback_days = st.selectbox(
+        t("fib_lookback"),
+        [55, 89, 105],
+        index=2,
+        format_func=lambda x: str(x),
+        help=t("fib_lookback_help"),
+    )
 
     st.divider()
     st.subheader(t("backtest_settings"))
@@ -533,8 +516,10 @@ def fetch_data(symbol: str, outputsize: int = 4000) -> pd.DataFrame:
 
     df = pd.DataFrame(data["values"]).rename(columns={"datetime": "date"})
     for col in ["open", "high", "low", "close", "volume"]:
-        df[col] = pd.to_numeric(df[col], errors="coerce")
-
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+        elif col == "volume":
+            df["volume"] = float("nan")
     df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values("date").reset_index(drop=True)
     df = df.dropna(subset=["open", "high", "low", "close"])
@@ -577,7 +562,7 @@ def rsi(close: pd.Series, period: int = 14) -> pd.Series:
     rs = avg_gain / avg_loss.replace(0, pd.NA)
     return (100 - (100 / (1 + rs))).bfill()
 
-def add_indicators(df: pd.DataFrame, rsi_p: int) -> pd.DataFrame:
+def add_indicators(df: pd.DataFrame, rsi_p: int, fib_lookback: int = 105) -> pd.DataFrame:
     df = df.copy()
 
     # Trend
@@ -604,8 +589,8 @@ def add_indicators(df: pd.DataFrame, rsi_p: int) -> pd.DataFrame:
     df["macd_signal"] = df["macd_line"].ewm(span=9, adjust=False).mean()
     df["macd_hist"] = df["macd_line"] - df["macd_signal"]
 
-    # Fibonacci retracement (swing over laatste 55 dagen)
-    lookback = 55
+    # Fibonacci retracement (swing over laatste N dagen)
+    lookback = fib_lookback
     df["swing_high"] = df["high"].rolling(window=lookback, min_periods=1).max()
     df["swing_low"] = df["low"].rolling(window=lookback, min_periods=1).min()
     swing_range = df["swing_high"] - df["swing_low"]
@@ -696,6 +681,7 @@ def prognosis_for_daily_move(
     rsi_p: int,
     buy_th: float,
     b1: float, b2: float, b3: float,
+    fib_lookback: int = 105,
 ) -> dict | None:
     """Gegeven huidige data: als de slotkoers vandaag move_pct% beweegt, welk signaal zou dat geven?"""
     if move_pct == 0:
@@ -715,7 +701,7 @@ def prognosis_for_daily_move(
         "close": next_close,
     }])
     extended = pd.concat([ohlc, new_row], ignore_index=True)
-    extended = add_indicators(extended, rsi_p)
+    extended = add_indicators(extended, rsi_p, fib_lookback=fib_lookback)
     conf_series = compute_confidence(extended)
     conf = float(conf_series.iloc[-1])
     sig = "BUY" if conf >= buy_th else "HOLD"
@@ -727,11 +713,12 @@ def prognosis_for_daily_move(
 # =========================
 # Build signal df
 # =========================
-def build_signal_df(symbol: str | None = None) -> pd.DataFrame:
+def build_signal_df(symbol: str | None = None, fib_lookback: int | None = None) -> pd.DataFrame:
     sym = symbol if symbol else ticker
     raw = fetch_data(sym, outputsize=days + 600)
     df = raw.tail(days).reset_index(drop=True)
-    df = add_indicators(df, rsi_period)
+    fb = fib_lookback if fib_lookback is not None else fib_lookback_days
+    df = add_indicators(df, rsi_period, fib_lookback=fb)
 
     df["confidence"] = compute_confidence(df)
     df["signal"] = (df["confidence"] >= buy_threshold).map({True: "BUY", False: "HOLD"})
@@ -946,8 +933,8 @@ def group_trade_stats(trades: pd.DataFrame) -> pd.DataFrame:
 _CACHE_VERSION = 2
 
 @st.cache_data(show_spinner=False)
-def run_full_analysis(symbol: str, days: int, rsi_p: int, buy_th: float, exit_th: float, max_hold: int, b1: float, b2: float, b3: float, _cache_version: int = _CACHE_VERSION):
-    df = build_signal_df(symbol)
+def run_full_analysis(symbol: str, days: int, rsi_p: int, buy_th: float, exit_th: float, max_hold: int, b1: float, b2: float, b3: float, fib_lookback: int, _cache_version: int = _CACHE_VERSION):
+    df = build_signal_df(symbol, fib_lookback=fib_lookback)
     trades, eq = run_backtest_equity(df)
     stats = group_trade_stats(trades)
     return df, trades, eq, stats
@@ -991,7 +978,7 @@ elif page == "Signals":
         df, trades, eq, stats = run_full_analysis(
             ticker, days, rsi_period,
             buy_threshold, exit_threshold, max_hold_days,
-            b1, b2, b3
+            b1, b2, b3, fib_lookback_days
         )
         latest = df.iloc[-1]
 
@@ -1286,7 +1273,7 @@ elif page == "Signals":
         # ---------- PROGNOSE BIJ VERONDERSTELDE DAGBEWEGING ----------
         if day_move_pct != 0:
             st.subheader(t("prognosis_title"))
-            prog = prognosis_for_daily_move(df, day_move_pct, rsi_period, buy_threshold, b1, b2, b3)
+            prog = prognosis_for_daily_move(df, day_move_pct, rsi_period, buy_threshold, b1, b2, b3, fib_lookback=fib_lookback_days)
             if prog:
                 pct_abs = abs(day_move_pct)
                 if day_move_pct < 0:
@@ -1454,7 +1441,7 @@ elif page == "Scanner":
     for sym in universe_tickers:
         try:
             df_u, trades_u, eq_u, stats_u = run_full_analysis(
-                sym, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3
+                sym, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3, fib_lookback_days
             )
             latest_u = df_u.iloc[-1]
             last_change_pct_u = float("nan")
@@ -1551,7 +1538,7 @@ elif page == "Watchlist":
     for sym in WATCHLIST_TICKERS:
         try:
             df_w, trades_w, eq_w, stats_w = run_full_analysis(
-                sym, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3
+                sym, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3, fib_lookback_days
             )
             latest_w = df_w.iloc[-1]
             # Dagbeweging van gisteren (laatste slot vs de dag ervoor)
@@ -1650,7 +1637,7 @@ elif page == "Optimizer":
             # Basisdata en indicatoren één keer berekenen
             raw = fetch_data(ticker, outputsize=days + 600)
             base = raw.tail(days).reset_index(drop=True)
-            base = add_indicators(base, rsi_period)
+            base = add_indicators(base, rsi_period, fib_lookback=fib_lookback_days)
             base["confidence"] = compute_confidence(base)
             base["rsi_zone"] = base["rsi"].apply(lambda x: rsi_zone(float(x)))
             base["setup"] = base.apply(compute_setup_label, axis=1)
@@ -1934,7 +1921,7 @@ elif page == "Backtest":
         df, trades, eq, stats = run_full_analysis(
             ticker, days, rsi_period, buy_threshold,
             exit_threshold, max_hold_days,
-            b1, b2, b3
+            b1, b2, b3, fib_lookback_days
         )
 
         # Basic metrics
@@ -1984,7 +1971,7 @@ elif page == "Export (later)":
 
     try:
         df_exp, trades_exp, eq_exp, stats_exp = run_full_analysis(
-            ticker, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3
+            ticker, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3, fib_lookback_days
         )
     except Exception as e:
         st.warning(t("export_no_data"))
