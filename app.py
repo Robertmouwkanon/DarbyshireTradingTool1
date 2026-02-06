@@ -62,6 +62,27 @@ def _tr() -> dict:
         "risk_block_title": {"nl": "Maximale positie (op basis van risico)", "en": "Maximum position (based on risk)"},
         "risk_summary": {"nl": "Met een account van **${account:,.0f}** en max risico **{risk_pct:.1f}%** en een stop **{stop_pct:.1f}%** onder de huidige koers (~${price:.2f}) kun je maximaal **{shares} stuks** kopen van **{ticker}** (ongeveer **${exposure:,.0f}** positie) met een risicobedrag rond **${risk_amount:,.0f}**.", "en": "With an account of **${account:,.0f}** and max risk **{risk_pct:.1f}%** and a stop **{stop_pct:.1f}%** below the current price (~${price:.2f}), you can buy at most **{shares} shares** of **{ticker}** (about **${exposure:,.0f}** position) with risk around **${risk_amount:,.0f}**."},
         "risk_too_small": {"nl": "Met deze instellingen is het risicobedrag kleiner dan het verlies per aandeel; verlaag de stop-afstand of verhoog het max risico–%.", "en": "With these settings the total risk is smaller than the loss per share; reduce stop distance or increase max risk %."},
+        # Eigen posities / gemiddelde aankoopprijs
+        "positions_title": {"nl": "Mijn aankopen in deze ticker", "en": "My buys in this ticker"},
+        "positions_intro": {"nl": "Hier kun je je eigen aankopen (stuks en prijs) vastleggen. De tool rekent dan je **gemiddelde aankoopprijs** en laat zien hoeveel je nu ongeveer voor- of achterloopt t.o.v. de huidige koers.", "en": "Here you can log your own buys (shares and price). The tool will compute your **average entry price** and show how far you are ahead or behind versus the current price."},
+        "trade_qty_label": {"nl": "Aantal gekocht", "en": "Quantity bought"},
+        "trade_price_label": {"nl": "Koers per stuk (USD)", "en": "Price per share (USD)"},
+        "trade_add_button": {"nl": "Koop toevoegen aan log", "en": "Add buy to log"},
+        "positions_no_trades": {"nl": "Nog geen aankopen vastgelegd voor deze ticker.", "en": "No buys recorded yet for this ticker."},
+        "positions_avg_price": {"nl": "Gemiddelde aankoopprijs", "en": "Average entry price"},
+        "positions_unrealized": {"nl": "Ongerealiseerde P/L t.o.v. huidige koers", "en": "Unrealised P/L versus current price"},
+        "positions_exit_planner_title": {"nl": "Uitstap-planner", "en": "Exit planner"},
+        "positions_exit_planner_intro": {"nl": "Eenvoudig uitstapplan in Jip-en-Janneke-taal: we pakken je **gemiddelde aankoopprijs** en zetten daar doelen bovenop (bijv. +4%, +6%, +8%). Ook zie je een richtlijn voor een stop-loss. Waar mogelijk sluit dit aan bij de historische kans op ≥4% winst en de gemiddelde houdperiode die je hierboven ziet.", "en": "Simple exit plan: we take your **average entry price** and add profit targets (e.g. +4%, +6%, +8%). You also see a rough stop-loss guideline. Where possible, this matches the historical chance of ≥4% profit and the average holding period shown above."},
+        "positions_exit_planner_no_hist": {"nl": "Voor deze combinatie zijn nog geen historische trades gevonden. We maken hieronder een simpele aanname voor winstdoelen en een stop-loss, puur als houvast.", "en": "For this combination there are no historical trades yet. Below we make a simple assumption for profit targets and a stop-loss, just as a guideline."},
+        "positions_exit_level": {"nl": "Doel {n}: +{pct:.0f}% → ongeveer ${price:.2f}", "en": "Target {n}: +{pct:.0f}% → about ${price:.2f}"},
+        "positions_stop_hint": {"nl": "Ruwe stop-loss richtlijn: ongeveer **{stop_pct:.1f}% onder je gemiddelde aankoopprijs** → rond **${stop_price:.2f}**. Gemiddelde houdperiode bij dit type signaal was historisch ongeveer **{days:.0f} dagen**.", "en": "Rough stop-loss guideline: about **{stop_pct:.1f}% below your average entry price** → around **${stop_price:.2f}**. Historical average holding period for this type of signal was about **{days:.0f} days**."},
+        "positions_stop_hint_simple": {"nl": "Simpele stop-loss richtlijn: bijvoorbeeld **{stop_pct:.1f}% onder je gemiddelde aankoopprijs** → rond **${stop_price:.2f}**. Zie dit als een veiligheidsriem; je kunt dit later verfijnen als er wel historische trades zijn.", "en": "Simple stop-loss guideline: for example **{stop_pct:.1f}% below your average entry price** → around **${stop_price:.2f}**. Treat this as a seatbelt; you can refine it later once there are historical trades."},
+        "positions_yday_drop_hint": {"nl": "Gisteren bewoog deze ticker ongeveer **{drop:.1f}%**. Op basis daarvan is een logisch eerste winstdoel rond **+{target_pct:.1f}%** vanaf je gemiddelde aankoopprijs → ongeveer **${target_price:.2f}**.", "en": "Yesterday this ticker moved about **{drop:.1f}%**. Based on that, a reasonable first profit target is around **+{target_pct:.1f}%** from your average entry → about **${target_price:.2f}**."},
+        "positions_custom_target_label": {"nl": "Eigen winstdoel (%) vanaf gemiddelde aankoop", "en": "Own profit target (%) from average entry"},
+        "positions_custom_target_help": {"nl": "Bijv. 4 betekent: je wilt ongeveer +4% winst vanaf je gemiddelde aankoopprijs. De tool rekent de bijbehorende koers uit en, waar mogelijk, de historische kans en typische houdperiode.", "en": "E.g. 4 means you want about +4% profit from your average entry price. The tool computes the corresponding price and, where possible, the historical probability and typical holding period."},
+        "positions_custom_target_price": {"nl": "Je eigen doel van **+{pct:.1f}%** komt neer op ongeveer **${price:.2f}** per stuk.", "en": "Your own target of **+{pct:.1f}%** corresponds to about **${price:.2f}** per share."},
+        "positions_custom_target_hist": {"nl": "Historisch werd dit niveau (≥ +{pct:.1f}%) bij dit type signaal in ongeveer **{prob:.0%}** van de trades gehaald, met een gemiddelde houdperiode van rond **{days:.0f} dagen** (geen garantie, wel een indicatie).", "en": "Historically this level (≥ +{pct:.1f}%) was reached in about **{prob:.0%}** of trades for this type of signal, with an average holding period of around **{days:.0f} days** (no guarantee, just an indication)."},
+        "positions_custom_target_no_hist": {"nl": "Voor dit eigen doel is nog geen historische kans bekend (te weinig vergelijkbare trades). Een grove richtlijn voor de wachttijd is ongeveer **{days:.0f} dagen**, gebaseerd op soortgelijke trades. Zie dit doel vooral als richtpunt samen met je stop-loss.", "en": "There is no historical probability yet for this custom target (too few similar trades). A rough guideline for waiting time is about **{days:.0f} days**, based on similar trades. Treat this target mainly as a guideline together with your stop-loss."},
         # Watchlist
         "watchlist_title": {"nl": "Watchlist (snelle keuze)", "en": "Watchlist (quick select)"},
         "watchlist_help": {"nl": "Klik op een ticker om het veld 'US ticker' direct in te vullen.", "en": "Click a ticker to fill the 'US ticker' field directly."},
@@ -69,6 +90,19 @@ def _tr() -> dict:
         "watchlist_page_title": {"nl": "Watchlist — overzicht", "en": "Watchlist — overview"},
         "watchlist_page_intro": {"nl": "Overzicht van je vaste tickers met het huidige signaal, confidence en historische kans ≥4% in 20 dagen.", "en": "Overview of your watchlist tickers with current signal, confidence and historical chance ≥4% in 20 days."},
         "watchlist_empty": {"nl": "Geen watchlist‑tickers konden worden geladen (controleer internet/API‑limieten).", "en": "No watchlist tickers could be loaded (check internet/API limits)."},
+        "watchlist_top5_title": {"nl": "Top 5 koopkansen (op basis van markt van gisteren)", "en": "Top 5 buy opportunities (based on yesterday's market)"},
+        "watchlist_top5_intro": {"nl": "Hier zie je de 5 sterkste BUY‑kansen uit je watchlist, gesorteerd op historische kans ≥4% in 20 dagen en confidence. De dagbeweging van gisteren geeft context: vaak zijn scherpe dalingen interessante dips, scherpe stijgingen eerder 'achter de muziek aan'.", "en": "Here you see the 5 strongest BUY opportunities from your watchlist, sorted by historical chance ≥4% in 20 days and confidence. Yesterday's move gives context: sharp drops can be interesting dips, sharp rises can mean 'chasing'."},
+        "watchlist_top5_none": {"nl": "Er zijn nu geen tickers in je watchlist met een BUY‑signaal.", "en": "There are currently no watchlist tickers with a BUY signal."},
+        "watchlist_top5_line": {"nl": "{rank}. **{ticker}** — BUY, kans ≥4% in 20d: **{prob4}**, gisteren: **{yday:.1f}%**, trades ≤20d: **{trades}**.", "en": "{rank}. **{ticker}** — BUY, chance ≥4% in 20d: **{prob4}**, yesterday: **{yday:.1f}%**, trades ≤20d: **{trades}**."},
+        # Scanner (vooraf gedefinieerde markten)
+        "page_scanner": {"nl": "Scanner (markt)", "en": "Scanner (market)"},
+        "scanner_title": {"nl": "Scanner — beste koopkansen per markt", "en": "Scanner — best buy opportunities per market"},
+        "scanner_intro": {"nl": "Kies hieronder een vooraf gedefinieerde markt (set tickers). De tool scant die tickers en geeft je een Top 5 van koopkansen met BUY‑signaal, historische kans ≥4% in 20 dagen en de dagbeweging van gisteren. Zo voelt het alsof je 'de beste koop op de markt' ziet, maar dan binnen een gekozen universum.", "en": "Choose a predefined market (set of tickers). The tool scans those tickers and gives you a Top 5 of buy opportunities with a BUY signal, historical chance ≥4% in 20 days and yesterday's move. It feels like 'best buy on the market', but within the chosen universe."},
+        "scanner_universe_label": {"nl": "Kies markt/universum", "en": "Choose market/universe"},
+        "scanner_universe_help": {"nl": "Elke optie is een vaste set tickers (bijv. grote index‑ETF's of grote US‑tech). De scanner zoekt daarbinnen naar de beste koopkansen.", "en": "Each option is a fixed set of tickers (e.g. major index ETFs or large US tech). The scanner looks for the best buy opportunities within that set."},
+        "scanner_empty": {"nl": "Er konden geen tickers voor deze markt worden geladen (internet/API‑limieten?).", "en": "No tickers for this market could be loaded (internet/API limits?)."},
+        "scanner_custom_label": {"nl": "Eigen tickers (komma- of enter-gescheiden)", "en": "Custom tickers (comma- or newline-separated)"},
+        "scanner_custom_help": {"nl": "Bijv. SOXL, TQQQ, NVDA, SPY of ieder op een nieuwe regel. De scanner neemt deze tickers als eigen universum.", "en": "E.g. SOXL, TQQQ, NVDA, SPY or one per line. The scanner uses these tickers as your own universe."},
         # Optimizer
         "page_optimizer": {"nl": "Optimizer", "en": "Optimizer"},
         "optimizer_title": {"nl": "Optimizer — parameter scan", "en": "Optimizer — parameter scan"},
@@ -162,6 +196,11 @@ def _tr() -> dict:
         "sp500_title": {"nl": "S&P 500 — brede markt", "en": "S&P 500 — broad market"},
         "sp500_caption": {"nl": "Signalen en analyse voor de S&P 500 via SPY (ETF die de index volgt).", "en": "Signals and analysis for the S&P 500 via SPY (ETF tracking the index)."},
         "error_sp500": {"nl": "Fout bij S&P 500:", "en": "Error on S&P 500:"},
+        # Bitcoin
+        "page_bitcoin": {"nl": "Bitcoin", "en": "Bitcoin"},
+        "bitcoin_title": {"nl": "Bitcoin — koopsignalen", "en": "Bitcoin — buy signals"},
+        "bitcoin_caption": {"nl": "Signalen en analyse voor Bitcoin (BTC/USD) met dezelfde indicatoren als bij aandelen en ETF's.", "en": "Signals and analysis for Bitcoin (BTC/USD) using the same indicators as for stocks and ETFs."},
+        "error_bitcoin": {"nl": "Fout bij Bitcoin:", "en": "Error on Bitcoin:"},
         # Configurator & prognose
         "configurator_title": {"nl": "Configurator (prognose)", "en": "Configurator (forecast)"},
         "day_move_label": {"nl": "Veronderstelde dagbeweging (%)", "en": "Assumed daily move (%)"},
@@ -224,6 +263,10 @@ st.title("Darbyshire Trading Tool")
 st.caption(APP_VERSION)
 st.caption(t("disclaimer"))
 
+if "user_trades" not in st.session_state:
+    # Dict: ticker -> list van dicts met {"qty": float, "price": float}
+    st.session_state.user_trades = {}
+
 load_dotenv()
 # Lokaal lezen we TWELVE_DATA_API_KEY uit .env (os.environ),
 # op Streamlit Cloud kan dezelfde key in st.secrets staan.
@@ -234,12 +277,33 @@ BASE_URL = "https://api.twelvedata.com/time_series"
 # Sidebar
 # =========================
 WATCHLIST_TICKERS = ["SOXL", "TQQQ", "NVDA", "SPY", "QQQ"]
-PAGE_KEYS = ["Home", "Koersdata", "Signals", "Watchlist", "Optimizer", "Koopsignalen Gold", "S&P 500", "Backtest", "Export (later)"]
+
+# Vooraf gedefinieerde markten voor de Scanner-pagina
+SCANNER_UNIVERSES = {
+    "Index & sector ETF (VS)": ["SPY", "QQQ", "DIA", "IWM", "XLK", "XLF", "XLV", "XLE", "XLY", "XLP"],
+    "Grote US growth/tech": ["AAPL", "MSFT", "NVDA", "GOOGL", "META", "AMZN", "TSLA", "NFLX", "AVGO"],
+    "Leveraged growth ETF": ["SOXL", "TQQQ", "SPXL", "TECL", "FNGU"],
+    "Crypto (BTC + ETF's)": ["BTC/USD", "BITO", "IBIT", "FBTC"],
+}
+
+PAGE_KEYS = ["Home", "Koersdata", "Signals", "Scanner", "Watchlist", "Optimizer", "Koopsignalen Gold", "Bitcoin", "S&P 500", "Backtest", "Export (later)"]
 with st.sidebar:
     lang_choice = st.radio("Language / Taal", ["🇳🇱 Nederlands", "🇬🇧 English"], horizontal=True)
     st.session_state.lang = "nl" if "Nederlands" in lang_choice else "en"
     st.header(t("menu"))
-    _page_labels = ["page_home", "page_koersdata", "page_signals", "page_watchlist", "page_optimizer", "page_gold", "page_sp500", "page_backtest", "page_export"]
+    _page_labels = [
+        "page_home",
+        "page_koersdata",
+        "page_signals",
+        "page_scanner",
+        "page_watchlist",
+        "page_optimizer",
+        "page_gold",
+        "page_bitcoin",
+        "page_sp500",
+        "page_backtest",
+        "page_export",
+    ]
     page_index = st.radio(t("choose"), range(len(PAGE_KEYS)), format_func=lambda i: t(_page_labels[i]))
     page = PAGE_KEYS[page_index]
 
@@ -423,6 +487,31 @@ def fetch_data(symbol: str, outputsize: int = 4000) -> pd.DataFrame:
     df = df.sort_values("date").reset_index(drop=True)
     df = df.dropna(subset=["open", "high", "low", "close"])
     return df
+
+
+def fetch_last_price(symbol: str) -> float | None:
+    """Haal een grove 'live' prijs op (laatste 1min-bar) voor het dashboard."""
+    api_key = API_KEY or os.environ.get("TWELVE_DATA_API_KEY") or getattr(st.secrets, "get", lambda *a, **k: None)("TWELVE_DATA_API_KEY", None)
+    if not api_key:
+        return None
+    params = {
+        "symbol": symbol,
+        "interval": "1min",
+        "outputsize": 1,
+        "apikey": api_key,
+        "format": "JSON",
+    }
+    try:
+        r = requests.get(BASE_URL, params=params, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+        if "values" not in data or not data["values"]:
+            return None
+        last = data["values"][0]
+        return float(last.get("close"))
+    except Exception:
+        # Bij fout gewoon geen live prijs tonen
+        return None
 
 # =========================
 # Indicatoren
@@ -915,6 +1004,42 @@ elif page == "Signals":
                         )
                     )
 
+        # ---------- EIGEN AANKOPEN / GEMIDDELDE AANKOOPPRIJS ----------
+        st.divider()
+        st.subheader(t("positions_title"))
+        st.caption(t("positions_intro"))
+
+        col_qty, col_price = st.columns(2)
+        new_qty = col_qty.number_input(t("trade_qty_label"), min_value=0.0, step=1.0)
+        new_price = col_price.number_input(t("trade_price_label"), min_value=0.0, step=0.1)
+
+        if st.button(t("trade_add_button")):
+            if new_qty > 0 and new_price > 0:
+                trades_for_ticker = st.session_state.user_trades.get(ticker, [])
+                trades_for_ticker.append({"qty": float(new_qty), "price": float(new_price)})
+                st.session_state.user_trades[ticker] = trades_for_ticker
+
+        trades_for_ticker = st.session_state.user_trades.get(ticker, [])
+        avg_price = None
+        if not trades_for_ticker:
+            st.info(t("positions_no_trades"))
+        else:
+            trades_df = pd.DataFrame(trades_for_ticker)
+            total_qty = trades_df["qty"].sum()
+            if total_qty > 0:
+                avg_price = (trades_df["qty"] * trades_df["price"]).sum() / total_qty
+                price_now = float(latest["close"])
+                unrealized_pct = (price_now / avg_price) - 1.0
+
+                c_pos1, c_pos2, c_pos3 = st.columns(3)
+                c_pos1.metric(t("positions_avg_price"), f"${avg_price:.2f}")
+                c_pos2.metric("Totaal aantal", f"{total_qty:,.0f}")
+                c_pos3.metric(t("positions_unrealized"), f"{unrealized_pct:.2%}")
+
+                st.dataframe(trades_df, width="stretch", hide_index=True)
+            else:
+                st.info(t("positions_no_trades"))
+
         # ---------- KANS-KAARTJE VOOR HUIDIG SIGNAAL ----------
         st.divider()
         st.subheader(t("trade_card_title"))
@@ -949,6 +1074,97 @@ elif page == "Signals":
                 c2.metric(t("prob_4pct_20d_label"), "n/a", help=t("prob_4pct_20d_help"))
             c3.metric(t("median_trade"), f"{trade_card['median']:.2%}", help=t("median_trade_help"))
 
+        # Korte uitstap-planner: altijd een simpele aanname als je een gemiddelde aankoopprijs hebt
+        if avg_price is not None:
+            st.subheader(t("positions_exit_planner_title"))
+            if not trades.empty and not current_trades.empty:
+                avg_hold_days_local = float(current_trades["days"].mean())
+                st.caption(t("positions_exit_planner_intro"))
+            else:
+                avg_hold_days_local = 20.0  # simpele aanname als er geen historie is
+                st.caption(t("positions_exit_planner_no_hist"))
+
+            # Eigen winstdoel (% vanaf gemiddelde aankoop)
+            custom_target_pct = st.number_input(
+                t("positions_custom_target_label"),
+                min_value=0.0,
+                max_value=50.0,
+                value=4.0,
+                step=0.5,
+                help=t("positions_custom_target_help"),
+            )
+            if custom_target_pct > 0:
+                custom_target_price = avg_price * (1.0 + custom_target_pct / 100.0)
+                st.caption(t("positions_custom_target_price", pct=custom_target_pct, price=custom_target_price))
+
+                # Historische inschatting voor dit eigen doel (als er trades zijn)
+                if not trades.empty and not current_trades.empty:
+                    thr = custom_target_pct / 100.0
+                    reached = current_trades[current_trades["return_pct"] >= thr]
+                    if not reached.empty:
+                        prob_custom = float((current_trades["return_pct"] >= thr).mean())
+                        avg_days_custom = float(reached["days"].mean())
+                        st.caption(
+                            t(
+                                "positions_custom_target_hist",
+                                pct=custom_target_pct,
+                                prob=prob_custom,
+                                days=avg_days_custom,
+                            )
+                        )
+                    else:
+                        # Geen trades die dit doel haalden: gebruik gemiddelde houdduur als grove richtlijn
+                        st.caption(
+                            t(
+                                "positions_custom_target_no_hist",
+                                days=avg_hold_days_local,
+                            )
+                        )
+
+            # Suggestie voor eerste doel op basis van de dagbeweging van gisteren
+            if len(df) >= 2:
+                last_change_pct = float((df["close"].iloc[-1] / df["close"].iloc[-2] - 1.0) * 100.0)
+                if last_change_pct < 0:
+                    suggested_target_pct = min(8.0, max(3.0, abs(last_change_pct) * 0.5))
+                else:
+                    suggested_target_pct = 4.0
+                suggested_target_price = avg_price * (1.0 + suggested_target_pct / 100.0)
+                st.caption(
+                    t(
+                        "positions_yday_drop_hint",
+                        drop=last_change_pct,
+                        target_pct=suggested_target_pct,
+                        target_price=suggested_target_price,
+                    )
+                )
+
+            # Winstdoelen (4%, 6%, 8%)
+            targets = [4.0, 6.0, 8.0]
+            for i, pct in enumerate(targets, start=1):
+                level = avg_price * (1.0 + pct / 100.0)
+                st.markdown(f"- " + t("positions_exit_level", n=i, pct=pct, price=level))
+
+            # Stop-loss richtlijn: zelfde stop_pct als in sidebar (of default 5%)
+            stop_pct_used = float(stop_pct if stop_pct > 0 else 5.0)
+            stop_price = avg_price * (1.0 - stop_pct_used / 100.0)
+            if not trades.empty and not current_trades.empty:
+                st.caption(
+                    t(
+                        "positions_stop_hint",
+                        stop_pct=stop_pct_used,
+                        stop_price=stop_price,
+                        days=avg_hold_days_local,
+                    )
+                )
+            else:
+                st.caption(
+                    t(
+                        "positions_stop_hint_simple",
+                        stop_pct=stop_pct_used,
+                        stop_price=stop_price,
+                    )
+                )
+
         # ---------- AANBEVOLEN TICKER (beste kans van slagen) ----------
         ticker_list = [s.strip().upper() for s in compare_tickers.split(",") if s.strip()][:5]
         if ticker_list:
@@ -964,6 +1180,7 @@ elif page == "Signals":
                         r = sdf.iloc[-1]
                         rows.append({
                             "ticker": sym,
+                            "price": float(r["close"]),
                             "signal": str(r["signal"]),
                             "confidence": float(r["confidence"]),
                             "rsi": float(r["rsi"]),
@@ -1008,12 +1225,17 @@ elif page == "Signals":
         st.divider()
 
         # --- LIVE SIGNAL (NU)
-        c1, c2, c3, c4, c5 = st.columns(5)
+        live_price = fetch_last_price(ticker)
+        c1, c2, c3, c4, c5, c6, c7 = st.columns(7)
         c1.metric("Signal", latest["signal"], help=t("signal_help"))
         c2.metric("Confidence", f"{latest['confidence']:.2f}", help=t("confidence_help"))
         c3.metric(f"RSI({rsi_period})", f"{latest['rsi']:.1f}", help=t("rsi_help"))
         c4.metric("Setup", str(latest["setup"]), help=t("setup_help"))
         c5.metric("Bucket", str(latest["conf_bucket"]), help=t("bucket_help"))
+        c6.metric("Price (close)", f"${float(latest['close']):.2f}")
+        if live_price is not None:
+            diff_pct = (live_price / float(latest["close"]) - 1.0) * 100.0
+            c7.metric("Live price (~1min)", f"${live_price:.2f}", f"{diff_pct:+.2f}%")
         st.caption(t("live_caption"))
         cols = [
             "date","open","high","low","close",
@@ -1098,6 +1320,110 @@ elif page == "Signals":
     except Exception as e:
         st.error(f"{t('error_signals')} {e}")
 
+elif page == "Scanner":
+    st.subheader(t("scanner_title"))
+    st.caption(t("scanner_intro"))
+
+    universe_name = st.selectbox(
+        t("scanner_universe_label"),
+        list(SCANNER_UNIVERSES.keys()),
+        help=t("scanner_universe_help"),
+    )
+    universe_tickers = SCANNER_UNIVERSES.get(universe_name, [])
+
+    rows = []
+    failed_syms = []
+    for sym in universe_tickers:
+        try:
+            df_u, trades_u, eq_u, stats_u = run_full_analysis(
+                sym, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3
+            )
+            latest_u = df_u.iloc[-1]
+            last_change_pct_u = float("nan")
+            if len(df_u) >= 2:
+                last_change_pct_u = float((df_u["close"].iloc[-1] / df_u["close"].iloc[-2] - 1.0) * 100.0)
+            trades_20d_u = trades_u[trades_u["days"] <= 20]
+            prob_4pct_20d_u = float("nan")
+            if not trades_20d_u.empty:
+                prob_4pct_20d_u = float((trades_20d_u["return_pct"] >= 0.04).mean())
+            rows.append({
+                "ticker": sym,
+                "price": float(latest_u["close"]),
+                "signal": str(latest_u["signal"]),
+                "confidence": float(latest_u["confidence"]),
+                "rsi": float(latest_u["rsi"]),
+                "setup": str(latest_u["setup"]),
+                "bucket": str(latest_u["conf_bucket"]),
+                "prob_4pct_20d": prob_4pct_20d_u,
+                "trades_20d": 0 if trades_20d_u.empty else int(len(trades_20d_u)),
+                "last_change_pct": last_change_pct_u,
+            })
+        except Exception:
+            failed_syms.append(sym)
+
+    if rows:
+        df_scan = pd.DataFrame(rows)
+        # Ranking binnen dit universum: eerst BUY, dan hoogste kans ≥4% in 20d, dan hoogste confidence
+        df_scan["_order"] = (
+            (df_scan["signal"] != "BUY").astype(int) * 1000
+            - df_scan["prob_4pct_20d"].fillna(0) * 100
+            - df_scan["confidence"] * 10
+        )
+        df_scan = df_scan.sort_values("_order").drop(columns=["_order"])
+
+        best = df_scan.iloc[0]
+        if best["signal"] == "BUY":
+            st.success("🟢 " + t("buy_recommendation", ticker=best["ticker"]))
+        else:
+            st.warning("🟠 " + t("buy_recommendation_none"))
+
+        st.dataframe(
+            df_scan[["ticker", "price", "signal", "confidence", "rsi", "setup", "bucket", "prob_4pct_20d", "trades_20d", "last_change_pct"]],
+            width="stretch",
+            hide_index=True,
+        )
+        if failed_syms:
+            st.caption("⚠️ " + ", ".join(failed_syms) + " niet geladen.")
+
+        # Top 5 binnen dit universum
+        st.divider()
+        st.subheader(t("watchlist_top5_title"))
+        st.caption(t("watchlist_top5_intro"))
+
+        buy_df = df_scan[df_scan["signal"] == "BUY"].copy()
+        if buy_df.empty:
+            st.info(t("watchlist_top5_none"))
+        else:
+            buy_df = buy_df.sort_values(
+                by=["prob_4pct_20d", "confidence"],
+                ascending=[False, False],
+            )
+            top5 = buy_df.head(5).reset_index(drop=True)
+
+            for idx, row in top5.iterrows():
+                prob_txt = "n/a" if pd.isna(row["prob_4pct_20d"]) else f"{row['prob_4pct_20d']:.0%}"
+                yday = row["last_change_pct"]
+                st.markdown(
+                    t(
+                        "watchlist_top5_line",
+                        rank=idx + 1,
+                        ticker=row["ticker"],
+                        prob4=prob_txt,
+                        yday=0.0 if pd.isna(yday) else yday,
+                        trades=int(row["trades_20d"]),
+                    )
+                )
+
+            st.dataframe(
+                top5[["ticker", "price", "signal", "confidence", "prob_4pct_20d", "trades_20d", "last_change_pct"]],
+                width="stretch",
+                hide_index=True,
+            )
+    else:
+        st.warning(t("scanner_empty"))
+        if failed_syms:
+            st.caption("⚠️ " + ", ".join(failed_syms) + " niet geladen.")
+
 elif page == "Watchlist":
     st.subheader(t("watchlist_page_title"))
     st.caption(t("watchlist_page_intro"))
@@ -1110,12 +1436,17 @@ elif page == "Watchlist":
                 sym, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3
             )
             latest_w = df_w.iloc[-1]
+            # Dagbeweging van gisteren (laatste slot vs de dag ervoor)
+            last_change_pct_w = float("nan")
+            if len(df_w) >= 2:
+                last_change_pct_w = float((df_w["close"].iloc[-1] / df_w["close"].iloc[-2] - 1.0) * 100.0)
             trades_20d = trades_w[trades_w["days"] <= 20]
             prob_4pct_20d = float("nan")
             if not trades_20d.empty:
                 prob_4pct_20d = float((trades_20d["return_pct"] >= 0.04).mean())
             rows.append({
                 "ticker": sym,
+                "price": float(latest_w["close"]),
                 "signal": str(latest_w["signal"]),
                 "confidence": float(latest_w["confidence"]),
                 "rsi": float(latest_w["rsi"]),
@@ -1123,6 +1454,7 @@ elif page == "Watchlist":
                 "bucket": str(latest_w["conf_bucket"]),
                 "prob_4pct_20d": prob_4pct_20d,
                 "trades_20d": 0 if trades_20d.empty else int(len(trades_20d)),
+                "last_change_pct": last_change_pct_w,
             })
         except Exception:
             failed_syms.append(sym)
@@ -1142,12 +1474,50 @@ elif page == "Watchlist":
         else:
             st.warning("🟠 " + t("buy_recommendation_none"))
         st.dataframe(
-            df_watch[["ticker", "signal", "confidence", "rsi", "setup", "bucket", "prob_4pct_20d", "trades_20d"]],
+            df_watch[["ticker", "price", "signal", "confidence", "rsi", "setup", "bucket", "prob_4pct_20d", "trades_20d", "last_change_pct"]],
             width="stretch",
             hide_index=True,
         )
         if failed_syms:
             st.caption("⚠️ " + ", ".join(failed_syms) + " niet geladen.")
+
+        # Top 5 BUY-kansen op basis van markt van gisteren + historische kans
+        st.divider()
+        st.subheader(t("watchlist_top5_title"))
+        st.caption(t("watchlist_top5_intro"))
+
+        buy_df = df_watch[df_watch["signal"] == "BUY"].copy()
+        if buy_df.empty:
+            st.info(t("watchlist_top5_none"))
+        else:
+            # Sorteer: hoogste prob_4pct_20d, dan hoogste confidence
+            buy_df = buy_df.sort_values(
+                by=["prob_4pct_20d", "confidence"],
+                ascending=[False, False],
+            )
+            top5 = buy_df.head(5).reset_index(drop=True)
+
+            # Tekstuele top 5
+            for idx, row in top5.iterrows():
+                prob_txt = "n/a" if pd.isna(row["prob_4pct_20d"]) else f"{row['prob_4pct_20d']:.0%}"
+                yday = row["last_change_pct"]
+                st.markdown(
+                    t(
+                        "watchlist_top5_line",
+                        rank=idx + 1,
+                        ticker=row["ticker"],
+                        prob4=prob_txt,
+                        yday=0.0 if pd.isna(yday) else yday,
+                        trades=int(row["trades_20d"]),
+                    )
+                )
+
+            # Kleine tabel met alleen de top 5
+            st.dataframe(
+                top5[["ticker", "signal", "confidence", "prob_4pct_20d", "trades_20d", "last_change_pct"]],
+                width="stretch",
+                hide_index=True,
+            )
     else:
         st.warning(t("watchlist_empty"))
         if failed_syms:
@@ -1309,6 +1679,70 @@ elif page == "Koopsignalen Gold":
 
     except Exception as e:
         st.error(f"{t('error_gold')} {e}")
+
+elif page == "Bitcoin":
+    st.subheader(t("bitcoin_title"))
+    st.caption(t("bitcoin_caption"))
+
+    try:
+        # Twelve Data gebruikt BTC/USD als symbool voor Bitcoin in USD
+        sdf = build_signal_df("BTC/USD")
+        latest = sdf.iloc[-1]
+
+        st.divider()
+        btc_signal = str(latest["signal"])
+        btc_conf = float(latest["confidence"])
+        btc_rsi = float(latest["rsi"])
+        btc_setup = str(latest["setup"])
+        btc_bucket = str(latest["conf_bucket"])
+        btc_ema20 = float(latest["ema20"])
+        btc_ema50 = float(latest["ema50"])
+        btc_ema200 = float(latest["ema200"])
+        btc_trend_short = "bullish" if btc_ema20 > btc_ema50 else "bearish"
+        btc_trend_long = "bullish" if btc_ema50 > btc_ema200 else "bearish"
+
+        if btc_signal == "BUY":
+            st.success(t("summary_buy_box"))
+        else:
+            st.warning(t("summary_hold_box"))
+
+        with st.expander(t("summary_expander"), expanded=True):
+            st.caption(t("signal_basis_explanation"))
+            st.markdown(t("summary_brief_analysis"))
+            st.markdown(f"- **RSI({rsi_period}):** {btc_rsi:.1f} ({rsi_zone(btc_rsi)})")
+            st.markdown(f"- **Trend:** {btc_trend_short} / {btc_trend_long}")
+            st.markdown(f"- **Setup:** {btc_setup} · **Bucket:** {btc_bucket}")
+            st.markdown(f"- **Confidence:** {btc_conf:.2f} ({t('threshold')} BUY = {buy_threshold})")
+            if btc_signal == "BUY":
+                st.markdown(t("advice_buy", symbol="BTC/USD", conf=btc_conf))
+            else:
+                st.markdown(t("advice_hold", symbol="BTC/USD"))
+
+        st.divider()
+
+        # Live signal voor Bitcoin
+        c1, c2, c3, c4, c5 = st.columns(5)
+        c1.metric("Signal", latest["signal"], help=t("signal_help"))
+        c2.metric("Confidence", f"{latest['confidence']:.2f}", help=t("confidence_help"))
+        c3.metric(f"RSI({rsi_period})", f"{latest['rsi']:.1f}", help=t("rsi_help"))
+        c4.metric("Setup", str(latest["setup"]), help=t("setup_help"))
+        c5.metric("Bucket", str(latest["conf_bucket"]), help=t("bucket_help"))
+
+        st.caption(t("live_caption"))
+        cols = [
+            "date", "open", "high", "low", "close",
+            "rsi", "ema20", "ema50", "ema200",
+            "roc10", "range_pct",
+            "confidence", "conf_bucket",
+            "rsi_zone", "setup", "signal",
+        ]
+        st.dataframe(sdf[cols].sort_values("date", ascending=False).head(200), width="stretch")
+
+        st.caption(t("chart_close"))
+        st.line_chart(sdf.set_index("date")[["close"]], width="stretch")
+
+    except Exception as e:
+        st.error(f"{t('error_bitcoin')} {e}")
 
 elif page == "S&P 500":
     st.subheader(t("sp500_title"))
