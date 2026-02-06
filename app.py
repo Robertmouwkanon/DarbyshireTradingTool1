@@ -1,5 +1,6 @@
 import os
 import time
+from io import BytesIO
 import requests
 import pandas as pd
 import streamlit as st
@@ -120,8 +121,25 @@ def _tr() -> dict:
         "home_expander_text": {"nl": "**Darbyshire Trading Tool** gebruikt koersdata en technische indicatoren om een **koopsignaal** (BUY of HOLD) te geven. Dat is geen garantie: het is een hulpmiddel voor onderzoek. **Confidence** (0–1) is een score die RSI, trend en momentum combineert; boven de drempel krijg je BUY. **Backtest** laat zien hoe het signaal in het verleden had uitgepakt.", "en": "**Darbyshire Trading Tool** uses price data and technical indicators to give a **buy signal** (BUY or HOLD). Not a guarantee—for research only. **Confidence** (0–1) combines RSI, trend and momentum; above the threshold you get BUY. **Backtest** shows how the signal would have performed in the past."},
         # Koersdata
         "koersdata_cols_title": {"nl": "ℹ️ Wat betekenen de kolommen?", "en": "ℹ️ What do the columns mean?"},
-        "koersdata_cols_text": {"nl": "- **open/high/low/close**: koers op de dag (open = start, close = slot).\n- **volume**: aantal verhandelde stuks.\n- **rsi**: Relative Strength Index (0–100); onder 30 vaak 'oversold', boven 70 'overbought'.\n- **ema20/50/200**: gemiddelde koers over 20, 50 of 200 dagen (trend).\n- **roc10**: procentuele verandering over 10 dagen (momentum).\n- **range_pct**: spreiding hoog–laag (volatiliteit).\n- **confidence**: model-score 0–1; hoger = sterker signaal.\n- **conf_bucket**: confidence in een groep (voor statistiek).\n- **setup**: type marktsituatie (Bird = dip, Green = trend, Grey = onduidelijk, None).\n- **signal**: BUY of HOLD op basis van de drempel.", "en": "- **open/high/low/close**: daily price (open = start, close = end).\n- **volume**: number of shares/funds traded.\n- **rsi**: Relative Strength Index (0–100); below 30 often oversold, above 70 overbought.\n- **ema20/50/200**: average price over 20, 50 or 200 days (trend).\n- **roc10**: % change over 10 days (momentum).\n- **range_pct**: high–low spread (volatility).\n- **confidence**: model score 0–1; higher = stronger signal.\n- **conf_bucket**: confidence group (for stats).\n- **setup**: market type (Bird = dip, Green = trend, Grey = unclear, None).\n- **signal**: BUY or HOLD based on threshold."},
+        "koersdata_cols_text": {"nl": "- **open/high/low/close**: koers op de dag (open = start, close = slot).\n- **volume**: aantal verhandelde stuks.\n- **rsi**: Relative Strength Index (0–100); onder 30 vaak 'oversold', boven 70 'overbought'.\n- **ema20/50/200**: gemiddelde koers over 20, 50 of 200 dagen (trend).\n- **roc10**: procentuele verandering over 10 dagen (momentum).\n- **range_pct**: spreiding hoog–laag (volatiliteit).\n- **macd_line / macd_signal / macd_hist**: MACD (12,26,9); lijn, signaallijn en histogram; kruisingen kunnen momentum aangeven.\n- **fib_236 t/m fib_786**: Fibonacci-retracementniveaus (23,6%–78,6%) t.o.v. de swing van de laatste 55 dagen; vaak gebruikt als steun/weerstand.\n- **confidence**: model-score 0–1; hoger = sterker signaal.\n- **conf_bucket**: confidence in een groep (voor statistiek).\n- **setup**: type marktsituatie (Bird = dip, Green = trend, Grey = onduidelijk, None).\n- **signal**: BUY of HOLD op basis van de drempel.", "en": "- **open/high/low/close**: daily price (open = start, close = end).\n- **volume**: number of shares/funds traded.\n- **rsi**: Relative Strength Index (0–100); below 30 often oversold, above 70 overbought.\n- **ema20/50/200**: average price over 20, 50 or 200 days (trend).\n- **roc10**: % change over 10 days (momentum).\n- **range_pct**: high–low spread (volatility).\n- **macd_line / macd_signal / macd_hist**: MACD (12,26,9); line, signal line and histogram; crossovers can indicate momentum.\n- **fib_236 to fib_786**: Fibonacci retracement levels (23.6%–78.6%) vs the last 55-day swing; often used as support/resistance.\n- **confidence**: model score 0–1; higher = stronger signal.\n- **conf_bucket**: confidence group (for stats).\n- **setup**: market type (Bird = dip, Green = trend, Grey = unclear, None).\n- **signal**: BUY or HOLD based on threshold."},
         "chart_close": {"nl": "Koersgrafiek (Close)", "en": "Price chart (Close)"},
+        "macd_fib_title": {"nl": "MACD & Fibonacci (laatste slot)", "en": "MACD & Fibonacci (last close)"},
+        "macd_fib_caption": {"nl": "MACD (12,26,9). Fibonacci op basis van swing laatste 55 dagen.", "en": "MACD (12,26,9). Fibonacci based on 55-day swing."},
+        "macd_line_help": {"nl": "MACD-lijn = EMA(12) − EMA(26). Geeft het verschil tussen korte en langere trend; positief = korte termijn sterker.", "en": "MACD line = EMA(12) − EMA(26). Shows the difference between short and longer trend; positive = short term stronger."},
+        "macd_signal_help": {"nl": "Signaallijn = 9-daagse gemiddelde van de MACD-lijn. Kruising van MACD door de signaallijn wordt vaak als koop/verkoopmoment gezien.", "en": "Signal line = 9-day average of the MACD line. MACD crossing the signal line is often seen as a buy/sell moment."},
+        "macd_hist_help": {"nl": "Histogram = MACD-lijn minus signaallijn. Positief = opwaarts momentum, negatief = neerwaarts. Groeiend histogram = sterkere beweging.", "en": "Histogram = MACD line minus signal line. Positive = upward momentum, negative = downward. Growing histogram = stronger move."},
+        "fib_382_help": {"nl": "Fibonacci 38,2%: retracementniveau t.o.v. de swing (hoog–laag) van de laatste 55 dagen. Vaak gebruikt als steun of weerstand.", "en": "Fibonacci 38.2%: retracement level vs the last 55-day swing (high–low). Often used as support or resistance."},
+        "fib_50_help": {"nl": "Fibonacci 50%: halverwege de swing. Klassiek retracementniveau; prijs kan hier reageren.", "en": "Fibonacci 50%: halfway the swing. Classic retracement level; price may react here."},
+        "fib_618_help": {"nl": "Fibonacci 61,8%: 'gulden snede'-niveau; veel gebruikt als steun bij pullbacks of doel bij uitbreken.", "en": "Fibonacci 61.8%: 'golden ratio' level; often used as support on pullbacks or target on breakouts."},
+        "macd_fib_expander": {"nl": "ℹ️ Uitleg MACD & Fibonacci", "en": "ℹ️ MACD & Fibonacci explained"},
+        "macd_fib_expander_text": {"nl": "**MACD** (Moving Average Convergence Divergence) vergelijkt een korte en een langere trendlijn (EMA 12 en 26). De lijn, signaallijn en histogram helpen momentum en mogelijke draaipunten te zien; een kruising van MACD door de signaallijn wordt door veel traders gebruikt.\n\n**Fibonacci-retracement** gebruikt verhoudingen (23,6%, 38,2%, 50%, 61,8%, 78,6%) van een recente prijsswing (hier: hoog en laag over de laatste 55 dagen). Die niveaus werken vaak als steun of weerstand. Geen garantie — puur als hulpmiddel.", "en": "**MACD** (Moving Average Convergence Divergence) compares a short and a longer trend line (EMA 12 and 26). The line, signal line and histogram help see momentum and possible turning points; MACD crossing the signal line is used by many traders.\n\n**Fibonacci retracement** uses ratios (23.6%, 38.2%, 50%, 61.8%, 78.6%) of a recent price swing (here: high and low over the last 55 days). Those levels often act as support or resistance. No guarantee — for guidance only."},
+        "macd_fib_advies_title": {"nl": "Advies: instap, uitstap en kans (MACD & Fib)", "en": "Advice: entry, exit and probability (MACD & Fib)"},
+        "macd_fib_instap_near": {"nl": "**Instap:** De prijs zit nu vlak bij het Fib **{level}**-niveau (ca. ${price:.2f}). Veel traders zien zo'n niveau als logische instap of toevoeging. Combineer met het BUY/HOLD-signaal hierboven.", "en": "**Entry:** Price is currently near the Fib **{level}** level (approx. ${price:.2f}). Many traders use such levels for entry or adding. Combine with the BUY/HOLD signal above."},
+        "macd_fib_instap_above": {"nl": "**Instap:** Prijs zit boven de Fib-niveaus (sterke beweging). Wachten op een pullback naar bv. Fib 50% of 61,8% kan een betere risico/opbrengst geven, of meegaan als het signaal BUY is.", "en": "**Entry:** Price is above the Fib levels (strong move). Waiting for a pullback to e.g. Fib 50% or 61.8% may improve risk/reward, or follow if the signal is BUY."},
+        "macd_fib_instap_below": {"nl": "**Instap:** Prijs zit onder de Fib-niveaus (dip). Fib 78,6% of swing-low kan als steun werken; instappen kan aantrekkelijk zijn als het signaal BUY is en MACD momentum ondersteunt.", "en": "**Entry:** Price is below the Fib levels (dip). Fib 78.6% or swing low may act as support; entry can be attractive if the signal is BUY and MACD supports momentum."},
+        "macd_fib_uitstap": {"nl": "**Uitstap:** Eerste doelen: Fib 38,2% of 50% (ca. ${f382:.2f} / ${f50:.2f}). Stop-loss overweging: onder recente Fib (bijv. Fib 78,6% of swing-low). Let ook op: als MACD onder de signaallijn kruist, kan dat een exit-signaal zijn.", "en": "**Exit:** First targets: Fib 38.2% or 50% (approx. ${f382:.2f} / ${f50:.2f}). Stop-loss idea: below recent Fib (e.g. Fib 78.6% or swing low). Also watch: if MACD crosses below the signal line, that can be an exit signal."},
+        "macd_fib_kans": {"nl": "**Kans bij instap (dit signaal):** De historische kans op o.a. 4% winst in 20 dagen voor dit type signaal (zelfde setup + bucket) staat hierboven bij 'Historische kans bij dit signaal'. Die cijfers gelden ook als je rond een Fib-niveau instapt: ze zijn gebaseerd op hetzelfde marktregime (RSI, trend, confidence).", "en": "**Probability when entering (this signal):** The historical chance of e.g. 4% profit in 20 days for this signal type (same setup + bucket) is shown above under 'Historical odds for this signal'. Those figures also apply when you enter near a Fib level: they are based on the same market regime (RSI, trend, confidence)."},
+        "macd_fib_instap_between": {"nl": "**Instap:** Prijs zit tussen de Fib-niveaus. Fib 50% is een veel gebruikt referentiepunt. Combineer met het BUY/HOLD-signaal en eventueel MACD (boven signaallijn = momentum mee).", "en": "**Entry:** Price is between the Fib levels. Fib 50% is a common reference. Combine with the BUY/HOLD signal and optionally MACD (above signal line = momentum in your favour)."},
         "error_koersdata": {"nl": "Fout bij Koersdata:", "en": "Error loading price data:"},
         # Signals
         "signals_expander": {"nl": "ℹ️ Uitleg begrippen", "en": "ℹ️ Glossary"},
@@ -243,7 +261,40 @@ def _tr() -> dict:
         "interpretation": {"nl": "Interpretatie: Expectancy/trade > 0 = edge; Profit factor > 1 = winst som > verlies som; let op sample size (trades).", "en": "Interpretation: Expectancy/trade > 0 = edge; Profit factor > 1 = profit sum > loss sum; mind sample size (trades)."},
         "error_backtest": {"nl": "Fout bij Backtest:", "en": "Error on Backtest:"},
         # Export
-        "export_info": {"nl": "Volgende stap: export signals.csv / trades.csv / stats.csv / equity.csv.", "en": "Next step: export signals.csv / trades.csv / stats.csv / equity.csv."},
+        "export_info": {"nl": "Download koersdata (inclusief MACD & Fibonacci), trades, statistieken en equity voor de gekozen ticker.", "en": "Download price data (including MACD & Fibonacci), trades, stats and equity for the selected ticker."},
+        "export_signals_excel": {"nl": "Download koersdata + MACD + Fib (Excel)", "en": "Download price data + MACD + Fib (Excel)"},
+        "export_signals_csv": {"nl": "Download koersdata + MACD + Fib (CSV)", "en": "Download price data + MACD + Fib (CSV)"},
+        "export_trades": {"nl": "Download trades (CSV)", "en": "Download trades (CSV)"},
+        "export_stats": {"nl": "Download conditional stats (CSV)", "en": "Download conditional stats (CSV)"},
+        "export_equity": {"nl": "Download equity curve (CSV)", "en": "Download equity curve (CSV)"},
+        "export_error": {"nl": "Fout bij export:", "en": "Export error:"},
+        "export_no_data": {"nl": "Geen data beschikbaar voor deze ticker.", "en": "No data available for this ticker."},
+        "export_macd_fib_note": {"nl": "De koersdata-export bevat de kolommen **MACD** (macd_line, macd_signal, macd_hist) en **Fibonacci** (fib_236, fib_382, fib_50, fib_618, fib_786, swing_high, swing_low), zodat je ze in Excel kunt gebruiken.", "en": "The price data export includes **MACD** columns (macd_line, macd_signal, macd_hist) and **Fibonacci** (fib_236, fib_382, fib_50, fib_618, fib_786, swing_high, swing_low) so you can use them in Excel."},
+        # Offerte generator
+        "page_offerte": {"nl": "Offerte generator", "en": "Quote generator"},
+        "offerte_title": {"nl": "Offerte generator", "en": "Quote generator"},
+        "offerte_intro": {"nl": "Vul het menu in en genereer je offerte. Je kunt de offerte direct bekijken en als PDF downloaden.", "en": "Fill in the menu and generate your quote. You can preview it and download as PDF."},
+        "offerte_klant": {"nl": "Klantgegevens", "en": "Client details"},
+        "offerte_klant_naam": {"nl": "Naam / bedrijf", "en": "Name / company"},
+        "offerte_klant_adres": {"nl": "Adres", "en": "Address"},
+        "offerte_klant_plaats": {"nl": "Plaats", "en": "City"},
+        "offerte_klant_ref": {"nl": "Referentie (bijv. projectnaam)", "en": "Reference (e.g. project name)"},
+        "offerte_regels": {"nl": "Offertelijnen", "en": "Quote lines"},
+        "offerte_regel_omschrijving": {"nl": "Omschrijving", "en": "Description"},
+        "offerte_regel_aantal": {"nl": "Aantal", "en": "Quantity"},
+        "offerte_regel_prijs": {"nl": "Eenheidsprijs (€)", "en": "Unit price (€)"},
+        "offerte_regel_toevoegen": {"nl": "Regel toevoegen", "en": "Add line"},
+        "offerte_regel_verwijderen": {"nl": "Verwijderen", "en": "Remove"},
+        "offerte_opties": {"nl": "Opties", "en": "Options"},
+        "offerte_btw": {"nl": "BTW %", "en": "VAT %"},
+        "offerte_geldig": {"nl": "Geldig tot (datum)", "en": "Valid until (date)"},
+        "offerte_ondertitel": {"nl": "Ondertitel offerte (optioneel)", "en": "Quote subtitle (optional)"},
+        "offerte_preview": {"nl": "Preview offerte", "en": "Quote preview"},
+        "offerte_download_pdf": {"nl": "Download als PDF", "en": "Download as PDF"},
+        "offerte_subtotaal": {"nl": "Subtotaal", "en": "Subtotal"},
+        "offerte_btw_bedrag": {"nl": "BTW", "en": "VAT"},
+        "offerte_totaal": {"nl": "Totaal", "en": "Total"},
+        "offerte_geen_regels": {"nl": "Voeg minstens één regel toe om de offerte te genereren.", "en": "Add at least one line to generate the quote."},
     }
 
 T = _tr()
@@ -286,7 +337,7 @@ SCANNER_UNIVERSES = {
     "Crypto (BTC + ETF's)": ["BTC/USD", "BITO", "IBIT", "FBTC"],
 }
 
-PAGE_KEYS = ["Home", "Koersdata", "Signals", "Scanner", "Watchlist", "Optimizer", "Koopsignalen Gold", "Bitcoin", "S&P 500", "Backtest", "Export (later)"]
+PAGE_KEYS = ["Home", "Koersdata", "Signals", "Scanner", "Watchlist", "Optimizer", "Koopsignalen Gold", "Bitcoin", "S&P 500", "Backtest", "Offerte generator", "Export (later)"]
 with st.sidebar:
     lang_choice = st.radio("Language / Taal", ["🇳🇱 Nederlands", "🇬🇧 English"], horizontal=True)
     st.session_state.lang = "nl" if "Nederlands" in lang_choice else "en"
@@ -302,6 +353,7 @@ with st.sidebar:
         "page_bitcoin",
         "page_sp500",
         "page_backtest",
+        "page_offerte",
         "page_export",
     ]
     page_index = st.radio(t("choose"), range(len(PAGE_KEYS)), format_func=lambda i: t(_page_labels[i]))
@@ -544,6 +596,24 @@ def add_indicators(df: pd.DataFrame, rsi_p: int) -> pd.DataFrame:
 
     # Market regime
     df["trend_up"] = (df["ema50"] > df["ema200"]).astype(int)
+
+    # MACD (12, 26, 9)
+    ema12 = df["close"].ewm(span=12, adjust=False).mean()
+    ema26 = df["close"].ewm(span=26, adjust=False).mean()
+    df["macd_line"] = ema12 - ema26
+    df["macd_signal"] = df["macd_line"].ewm(span=9, adjust=False).mean()
+    df["macd_hist"] = df["macd_line"] - df["macd_signal"]
+
+    # Fibonacci retracement (swing over laatste 55 dagen)
+    lookback = 55
+    df["swing_high"] = df["high"].rolling(window=lookback, min_periods=1).max()
+    df["swing_low"] = df["low"].rolling(window=lookback, min_periods=1).min()
+    swing_range = df["swing_high"] - df["swing_low"]
+    df["fib_236"] = df["swing_high"] - 0.236 * swing_range
+    df["fib_382"] = df["swing_high"] - 0.382 * swing_range
+    df["fib_50"] = df["swing_high"] - 0.5 * swing_range
+    df["fib_618"] = df["swing_high"] - 0.618 * swing_range
+    df["fib_786"] = df["swing_high"] - 0.786 * swing_range
 
     return df
 
@@ -872,9 +942,12 @@ def group_trade_stats(trades: pd.DataFrame) -> pd.DataFrame:
     stats = stats.sort_values(["setup", "bucket"]).reset_index(drop=True)
     return stats
 
+# Cache-versie: verhoog bij wijzigingen in indicatoren (bijv. MACD/Fib) zodat oude cache niet meer gebruikt wordt
+_CACHE_VERSION = 2
+
 @st.cache_data(show_spinner=False)
-def run_full_analysis(symbol: str, days: int, rsi_p: int, buy_th: float, exit_th: float, max_hold: int, b1: float, b2: float, b3: float):
-    df = build_signal_df()
+def run_full_analysis(symbol: str, days: int, rsi_p: int, buy_th: float, exit_th: float, max_hold: int, b1: float, b2: float, b3: float, _cache_version: int = _CACHE_VERSION):
+    df = build_signal_df(symbol)
     trades, eq = run_backtest_equity(df)
     stats = group_trade_stats(trades)
     return df, trades, eq, stats
@@ -898,6 +971,8 @@ elif page == "Koersdata":
             "date", "open", "high", "low", "close", "volume",
             "rsi", "ema20", "ema50", "ema200",
             "roc10", "range_pct",
+            "macd_line", "macd_signal", "macd_hist",
+            "fib_236", "fib_382", "fib_50", "fib_618", "fib_786",
             "confidence", "conf_bucket", "setup", "signal"
         ]
         st.dataframe(df[show_cols].tail(300), width="stretch")
@@ -1237,13 +1312,56 @@ elif page == "Signals":
             diff_pct = (live_price / float(latest["close"]) - 1.0) * 100.0
             c7.metric("Live price (~1min)", f"${live_price:.2f}", f"{diff_pct:+.2f}%")
         st.caption(t("live_caption"))
+
+        # MACD & Fibonacci (huidige waarden) — alleen als kolommen aanwezig (bijv. na cache-refresh)
+        has_macd_fib = "macd_line" in df.columns and "fib_382" in df.columns
+        if has_macd_fib:
+            with st.expander(t("macd_fib_expander")):
+                st.markdown(t("macd_fib_expander_text"))
+            st.subheader(t("macd_fib_title"))
+            m1, m2, m3, m4, m5, m6 = st.columns(6)
+            m1.metric("MACD line", f"{float(latest['macd_line']):.4f}", help=t("macd_line_help"))
+            m2.metric("MACD signal", f"{float(latest['macd_signal']):.4f}", help=t("macd_signal_help"))
+            m3.metric("MACD hist", f"{float(latest['macd_hist']):.4f}", help=t("macd_hist_help"))
+            m4.metric("Fib 38.2%", f"${float(latest['fib_382']):.2f}", help=t("fib_382_help"))
+            m5.metric("Fib 50%", f"${float(latest['fib_50']):.2f}", help=t("fib_50_help"))
+            m6.metric("Fib 61.8%", f"${float(latest['fib_618']):.2f}", help=t("fib_618_help"))
+            st.caption(t("macd_fib_caption"))
+
+            # Advies: instap, uitstap, kans (op basis van MACD + Fib)
+            st.subheader(t("macd_fib_advies_title"))
+            close_now = float(latest["close"])
+            f382 = float(latest["fib_382"])
+            f50 = float(latest["fib_50"])
+            f618 = float(latest["fib_618"])
+            f786 = float(latest["fib_786"])
+            swing_high = float(latest["swing_high"])
+            swing_low = float(latest["swing_low"])
+            pct_tol = 0.015  # 1,5% marge om "nabij" te bepalen
+            if abs(close_now - f382) / f382 <= pct_tol:
+                st.info(t("macd_fib_instap_near", level="38,2%", price=f382))
+            elif abs(close_now - f50) / f50 <= pct_tol:
+                st.info(t("macd_fib_instap_near", level="50%", price=f50))
+            elif abs(close_now - f618) / f618 <= pct_tol:
+                st.info(t("macd_fib_instap_near", level="61,8%", price=f618))
+            elif close_now > swing_high * (1 - pct_tol):
+                st.info(t("macd_fib_instap_above"))
+            elif close_now < f786 * (1 + pct_tol):
+                st.info(t("macd_fib_instap_below"))
+            else:
+                st.info(t("macd_fib_instap_between"))
+            st.caption(t("macd_fib_uitstap", f382=f382, f50=f50))
+            st.caption(t("macd_fib_kans"))
+
         cols = [
             "date","open","high","low","close",
             "rsi","ema20","ema50","ema200",
             "roc10","range_pct",
-            "confidence","conf_bucket",
-            "rsi_zone","setup","signal"
         ]
+        if has_macd_fib:
+            cols += ["macd_line","macd_signal","macd_hist", "fib_236","fib_382","fib_50","fib_618","fib_786"]
+        cols += ["confidence","conf_bucket","rsi_zone","setup","signal"]
+        cols = [c for c in cols if c in df.columns]
         st.dataframe(df[cols].sort_values("date", ascending=False).head(200), width="stretch")
 
         # --- HISTORISCHE VERWACHTING BIJ DIT SIGNAAL
@@ -1860,4 +1978,77 @@ elif page == "Backtest":
         st.error(f"{t('error_backtest')} {e}")
 
 elif page == "Export (later)":
-    st.info(t("export_info"))
+    st.subheader("Export — " + ticker)
+    st.caption(t("export_info"))
+    st.caption(t("export_macd_fib_note"))
+
+    try:
+        df_exp, trades_exp, eq_exp, stats_exp = run_full_analysis(
+            ticker, days, rsi_period, buy_threshold, exit_threshold, max_hold_days, b1, b2, b3
+        )
+    except Exception as e:
+        st.warning(t("export_no_data"))
+        st.caption(str(e))
+        df_exp = trades_exp = eq_exp = stats_exp = None
+
+    if df_exp is not None and not df_exp.empty:
+        # Kolommen voor export (zelfde als Koersdata, incl. MACD & Fib)
+        export_cols = [
+            "date", "open", "high", "low", "close", "volume",
+            "rsi", "ema20", "ema50", "ema200",
+            "roc10", "range_pct",
+            "macd_line", "macd_signal", "macd_hist",
+            "fib_236", "fib_382", "fib_50", "fib_618", "fib_786",
+            "swing_high", "swing_low",
+            "confidence", "conf_bucket", "rsi_zone", "setup", "signal"
+        ]
+        df_export = df_exp[[c for c in export_cols if c in df_exp.columns]].copy()
+        df_export["date"] = df_export["date"].astype(str)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            # Excel (koersdata + MACD + Fib)
+            try:
+                buf = BytesIO()
+                df_export.to_excel(buf, index=False, engine="openpyxl")
+                st.download_button(
+                    t("export_signals_excel"),
+                    data=buf.getvalue(),
+                    file_name=f"koersdata_MACD_Fib_{ticker}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
+            except Exception as ex:
+                st.caption(t("export_error") + " Excel: " + str(ex))
+        with col2:
+            # CSV (koersdata + MACD + Fib)
+            st.download_button(
+                t("export_signals_csv"),
+                data=df_export.to_csv(index=False).encode("utf-8"),
+                file_name=f"koersdata_MACD_Fib_{ticker}.csv",
+                mime="text/csv",
+            )
+
+        st.divider()
+        if not trades_exp.empty:
+            st.download_button(
+                t("export_trades"),
+                data=trades_exp.to_csv(index=False).encode("utf-8"),
+                file_name=f"trades_{ticker}.csv",
+                mime="text/csv",
+            )
+        if stats_exp is not None and not stats_exp.empty:
+            st.download_button(
+                t("export_stats"),
+                data=stats_exp.to_csv(index=False).encode("utf-8"),
+                file_name=f"stats_{ticker}.csv",
+                mime="text/csv",
+            )
+        if eq_exp is not None and not eq_exp.empty:
+            st.download_button(
+                t("export_equity"),
+                data=eq_exp.to_csv(index=False).encode("utf-8"),
+                file_name=f"equity_{ticker}.csv",
+                mime="text/csv",
+            )
+    else:
+        st.info(t("export_no_data"))
